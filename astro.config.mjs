@@ -7,7 +7,8 @@ import vue from '@astrojs/vue'
 // https://astro.build/config
 export default defineConfig({
   integrations: [mdx(), react(), vue()],
-  base:  '/davidsteen218.github.io'
+  site:  'https://davidsteen218.github.io'
+  base:  '/davidsteen218'
 
   markdown: {
     shikiConfig: {
