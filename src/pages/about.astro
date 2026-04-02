@@ -1,0 +1,128 @@
+---
+// src/pages/about.astro
+import Base   from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { person, skills, projects } from '../data/site';
+
+const featured = projects.filter(p => p.featured);
+---
+
+<Base title={`${person.handle} — about`} description={person.bio}>
+  <Header />
+
+  <main>
+    <div class="about-layout">
+
+      <!-- prose -->
+      <div>
+        <div class="prose">
+          <p>
+            I'm <strong>{person.name}</strong>, a {person.role} based in {person.location}.
+            {person.bio}
+          </p>
+
+          <h2>work</h2>
+          <p>
+            Currently at <strong>Company</strong>, working on [what you work on].
+            Before that I was at <strong>Previous Co</strong> doing [what you did].
+          </p>
+          <p>
+            Most of my time is spent on backend systems and infrastructure — the boring, invisible layer that
+            everything else depends on. I care a lot about operational simplicity: software that's easy to
+            understand when things go wrong at 3am.
+          </p>
+
+          <h2>open source</h2>
+          <p>
+            I maintain {projects.filter(p => p.status === 'active').length} active projects, mostly around
+            developer tooling and infrastructure. Featured work:
+          </p>
+          <ul>
+            {featured.map(p => (
+              <li>
+                <a href={p.repo} target="_blank" rel="noopener noreferrer"><strong>{p.name}</strong></a>
+                {' — '}{p.tagline}
+              </li>
+            ))}
+          </ul>
+
+          <h2>skills</h2>
+          <div class="skills-grid" style="margin-top:1em">
+            {skills.map(g => (
+              <div class="skill-group">
+                <div class="skill-group-name">{g.group}</div>
+                <div class="skill-items">
+                  {g.items.map(i => <span class="skill-item">{i}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <h2>colophon</h2>
+          <p>
+            Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>.
+            Font is <a href="https://www.jetbrains.com/lp/mono/" target="_blank" rel="noopener noreferrer">JetBrains Mono</a>.
+            Deployed to GitHub Pages via GitHub Actions. No analytics. No cookies.
+          </p>
+        </div>
+      </div>
+
+      <!-- aside -->
+      <div class="aside-panel">
+        <div class="aside-block">
+          <div class="aside-title">contact</div>
+          <div class="aside-links">
+            <a href={person.github} target="_blank" rel="noopener noreferrer" class="aside-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              GitHub
+            </a>
+            <a href={person.linkedin} target="_blank" rel="noopener noreferrer" class="aside-link">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+            <a href={`mailto:${person.email}`} class="aside-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+              Email
+            </a>
+          </div>
+        </div>
+
+        <div class="aside-block">
+          <div class="aside-title">by the numbers</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--fg-muted);font-weight:300;">
+            <div style="display:flex;justify-content:space-between;">
+              <span>repositories</span>
+              <span style="color:var(--fg)">{projects.length}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span>active</span>
+              <span style="color:var(--fg)">{projects.filter(p=>p.status==='active').length}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span>total stars</span>
+              <span style="color:var(--fg)">{projects.reduce((s,p)=>s+(p.stars??0),0).toLocaleString()}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span>languages</span>
+              <span style="color:var(--fg)">{[...new Set(projects.map(p=>p.lang))].length}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="aside-block">
+          <div class="aside-title">status key</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:11.5px;color:var(--fg-muted);font-weight:300;">
+            <div style="display:flex;align-items:center;gap:8px;"><span class="status-dot active"></span> active — maintained, PRs welcome</div>
+            <div style="display:flex;align-items:center;gap:8px;"><span class="status-dot maintained"></span> maintained — stable, no new features</div>
+            <div style="display:flex;align-items:center;gap:8px;"><span class="status-dot wip"></span> wip — under active development</div>
+            <div style="display:flex;align-items:center;gap:8px;"><span class="status-dot archived"></span> archived — read-only</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Base>

@@ -1,0 +1,41 @@
+---
+// src/components/ProjectCard.astro
+import type { Project } from '../data/site';
+
+interface Props { project: Project }
+const { project: p } = Astro.props;
+---
+
+<article class:list={['project-card', p.featured && 'featured']} data-lang={p.lang} data-status={p.status} data-category={p.category}>
+  <div class="card-header">
+    <span class="card-name">
+      <a href={p.repo} target="_blank" rel="noopener noreferrer" style="color:inherit">{p.name}</a>
+    </span>
+    <div class="card-header-right">
+      {p.stars !== undefined && (
+        <span class="card-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          {p.stars}
+        </span>
+      )}
+      <span class:list={['status-dot', p.status]} title={p.status}></span>
+    </div>
+  </div>
+
+  <p class="card-tagline">{p.tagline}</p>
+  <p class="card-desc">{p.description}</p>
+
+  <div class="card-footer">
+    <div class="card-tags">
+      {p.tags.slice(0, 3).map(t => <span class="tag">{t}</span>)}
+    </div>
+    <span class="card-lang">{p.lang} · {p.year}</span>
+  </div>
+
+  <div class="card-links">
+    <a href={p.repo} target="_blank" rel="noopener noreferrer" class="card-link">repo ↗</a>
+    {p.demo && <a href={p.demo} target="_blank" rel="noopener noreferrer" class="card-link">demo ↗</a>}
+  </div>
+</article>

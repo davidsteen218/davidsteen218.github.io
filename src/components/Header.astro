@@ -1,0 +1,37 @@
+---
+// src/components/Header.astro
+import { person } from '../data/site';
+
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/',          label: 'projects' },
+  { href: '/about',     label: 'about'    },
+];
+
+function active(href: string) {
+  if (href === '/') return path === '/';
+  return path.startsWith(href);
+}
+---
+
+<header class="site-header">
+  <div class="header-row">
+    <div class="identity">
+      <a href="/" style="text-decoration:none">
+        <span class="site-name">{person.handle}<span class="cursor"></span></span>
+      </a>
+      <span class="site-role">{person.role} · {person.location}</span>
+    </div>
+    <div class="header-actions">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">[ dark ]</button>
+    </div>
+  </div>
+</header>
+
+<nav class="site-nav">
+  {nav.map(l => (
+    <a href={l.href} class="nav-link" aria-current={active(l.href) ? 'page' : undefined}>
+      {l.label}
+    </a>
+  ))}
+</nav>

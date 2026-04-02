@@ -1,0 +1,162 @@
+---
+// src/pages/index.astro
+import Base        from '../layouts/Base.astro';
+import Header      from '../components/Header.astro';
+import Footer      from '../components/Footer.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects, person } from '../data/site';
+
+const total  = projects.length;
+const stars  = projects.reduce((s, p) => s + (p.stars ?? 0), 0);
+const active = projects.filter(p => p.status === 'active').length;
+const langs  = [...new Set(projects.map(p => p.lang))];
+const cats   = [...new Set(projects.map(p => p.category))];
+const statuses = [...new Set(projects.map(p => p.status))];
+---
+
+<Base title={`${person.handle} — projects`}>
+  <Header />
+
+  <main>
+    <!-- stats -->
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-num">{total}</span>
+        <span class="stat-lbl">repositories</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">{stars.toLocaleString()}</span>
+        <span class="stat-lbl">total stars</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">{active}</span>
+        <span class="stat-lbl">active</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">{langs.length}</span>
+        <span class="stat-lbl">languages</span>
+      </div>
+    </div>
+
+    <!-- toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left" id="filters">
+        <span class="section-label" style="margin-right:4px">filter</span>
+        <button class="filter-btn active" data-filter="all">all</button>
+        {cats.map(c    => <button class="filter-btn" data-filter={`cat:${c}`}>{c}</button>)}
+        {langs.map(l   => <button class="filter-btn" data-filter={`lang:${l}`}>{l}</button>)}
+        {statuses.map(s => <button class="filter-btn" data-filter={`status:${s}`}>{s}</button>)}
+      </div>
+      <div class="toolbar-right">
+        <div class="view-toggle">
+          <button class="view-btn active" id="viewGrid" aria-label="Grid view">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="10" y="0" width="6" height="6" rx="1"/><rect x="0" y="10" width="6" height="6" rx="1"/><rect x="10" y="10" width="6" height="6" rx="1"/></svg>
+          </button>
+          <button class="view-btn" id="viewList" aria-label="List view">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><rect x="0" y="1" width="16" height="2" rx="1"/><rect x="0" y="7" width="16" height="2" rx="1"/><rect x="0" y="13" width="16" height="2" rx="1"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- grid view -->
+    <div id="gridView">
+      <div class="project-grid" id="projectGrid">
+        {projects.map(p => <ProjectCard project={p} />)}
+      </div>
+    </div>
+
+    <!-- list view (hidden by default) -->
+    <div id="listView" style="display:none">
+      <table class="project-table">
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>lang</th>
+            <th>status</th>
+            <th>stars</th>
+            <th>year</th>
+          </tr>
+        </thead>
+        <tbody id="projectTable">
+          {projects.map(p => (
+            <tr data-lang={p.lang} data-status={p.status} data-category={p.category}>
+              <td class="td-name">
+                <a href={p.repo} target="_blank" rel="noopener noreferrer">{p.name}</a>
+              </td>
+              <td class="td-desc">{p.tagline}</td>
+              <td class="td-lang">{p.lang}</td>
+              <td><span class:list={['status-pill', p.status]}>{p.status}</span></td>
+              <td class="td-stars">
+                {p.stars !== undefined && (
+                  <>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    {p.stars}
+                  </>
+                )}
+              </td>
+              <td class="td-year">{p.year}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty" id="emptyState" style="display:none">// no projects match this filter</div>
+
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  // ── view toggle ──────────────────────────────────────────────
+  const gridView = document.getElementById('gridView')!;
+  const listView = document.getElementById('listView')!;
+  const btnGrid  = document.getElementById('viewGrid')!;
+  const btnList  = document.getElementById('viewList')!;
+
+  btnGrid.addEventListener('click', () => {
+    gridView.style.display = '';
+    listView.style.display = 'none';
+    btnGrid.classList.add('active');
+    btnList.classList.remove('active');
+  });
+  btnList.addEventListener('click', () => {
+    gridView.style.display = 'none';
+    listView.style.display = '';
+    btnList.classList.add('active');
+    btnGrid.classList.remove('active');
+  });
+
+  // ── filter ───────────────────────────────────────────────────
+  const filterBar  = document.getElementById('filters')!;
+  const gridCards  = document.querySelectorAll<HTMLElement>('#projectGrid .project-card');
+  const tableRows  = document.querySelectorAll<HTMLElement>('#projectTable tr');
+  const emptyState = document.getElementById('emptyState')!;
+
+  filterBar.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('.filter-btn') as HTMLButtonElement | null;
+    if (!btn) return;
+
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const f = btn.dataset.filter ?? 'all';
+
+    function matches(el: HTMLElement) {
+      if (f === 'all') return true;
+      if (f.startsWith('lang:'))   return el.dataset.lang     === f.slice(5);
+      if (f.startsWith('status:')) return el.dataset.status   === f.slice(7);
+      if (f.startsWith('cat:'))    return el.dataset.category === f.slice(4);
+      return true;
+    }
+
+    let visibleGrid = 0;
+    gridCards.forEach(c  => { const show = matches(c);  c.style.display = show ? '' : 'none'; if(show) visibleGrid++; });
+    tableRows.forEach(r  => { r.style.display = matches(r) ? '' : 'none'; });
+
+    emptyState.style.display = visibleGrid === 0 ? '' : 'none';
+  });
+</script>
