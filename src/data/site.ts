@@ -16,7 +16,7 @@ export const person = {
 };
 
 export type Status = 'active' | 'maintained' | 'archived' | 'wip';
-export type Category = 'cli' | 'library' | 'api' | 'web' | 'infra' | 'tool';
+export type Category = 'GitHub' | 'html' | 'mdx' | 'go' | 'infra' | 'tool';
 
 export interface Project {
   name:        string;
@@ -26,7 +26,7 @@ export interface Project {
   status:      Status;
   category:    Category;
   lang:        string;
-  stars?:      number;
+//  stars?:      number;
   repo:        string;
   demo?:       string;
   tags:        string[];
@@ -36,61 +36,62 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    name:        'tracer',
-    slug:        'tracer',
-    tagline:     'Distributed tracing for Go services with zero config.',
-    description: 'A lightweight OpenTelemetry wrapper that instruments Go HTTP servers and gRPC services automatically. Drop in one middleware call and get traces, spans, and baggage propagation without touching business logic.',
+    name:        'davidsteen218.github.io',
+    slug:        'eportfolio',
+    tagline:     'A clean project portfolio powered by Astro and GitHub.',
+    description: 'List active, wip, and archived projects to serve as unified portfolio.',
     status:      'active',
-    category:    'library',
+    category:    'GitHub',
+    lang:        'Astro',
+  //  stars:       187,
+    repo:        'https://github.com/davidsteen218/davidsteen218.github.io',
+    tags:        ['active', 'github', 'astro'],
+    featured:    true,
+    year:        2026,
+  },
+  {
+    name:        'Cloud Native',
+    slug:        'blog',
+    tagline:     'Electronic lab notebook tracking development, production, and Edisonian (fail fast) home lab lessons.',
+    description: 'Working/evergreen lab notebook documenting development, production, and Edisonian (fast fail) home lab lessons. As an electronic lab notebook, topics will be summarized, processes documented, and data collected to aid in replicating the results. Like any good chemistry lab notebook, there will be spills, blots, and stains (Not all posts will be hyper-polished), but the resulting patina will add to its character.',
+    status:      'active',
+    category:    'GitHub',
     lang:        'Go',
-    stars:       312,
+  //  stars:       312,
     repo:        'https://github.com/yourusername/tracer',
     tags:        ['go', 'observability', 'opentelemetry', 'tracing'],
     featured:    true,
-    year:        2024,
+    year:        2026,
   },
   {
-    name:        'kv',
-    slug:        'kv',
-    tagline:     'A dead-simple CLI key-value store backed by SQLite.',
-    description: 'Store, retrieve, and search key-value pairs from the terminal. Namespaced, typed values with optional TTL. Built as a replacement for scattered shell variables and dotfiles.',
+    name:        'Business Card',
+    slug:        'card',
+    tagline:     'Calling card of today.',
+    description: 'Stylized static page contact card.',
     status:      'active',
-    category:    'cli',
-    lang:        'Rust',
-    stars:       187,
-    repo:        'https://github.com/yourusername/kv',
-    tags:        ['rust', 'cli', 'sqlite', 'tooling'],
+    category:    'html',
+    lang:        'html',
+  //  stars:       94,
+    repo:        'https://github.com/davidsteen218/card',
+    tags:        ['active', 'html', 'GitHub'],
     featured:    true,
-    year:        2024,
+    year:        2026,
   },
   {
-    name:        'portmap',
-    slug:        'portmap',
-    tagline:     'See what is listening on every port. Instantly.',
-    description: 'A terminal UI for visualising port usage across local and remote hosts. Coloured by process type, filterable by name or PID, with optional continuous watch mode.',
-    status:      'active',
-    category:    'tool',
-    lang:        'Go',
-    stars:       94,
-    repo:        'https://github.com/yourusername/portmap',
-    tags:        ['go', 'tui', 'networking', 'devtools'],
-    featured:    false,
-    year:        2024,
-  },
-  {
-    name:        'sqlmig',
-    slug:        'sqlmig',
-    tagline:     'Forward-only SQL migrations. Nothing else.',
-    description: 'A migration runner that applies numbered .sql files in order, records what ran, and gets out of the way. Supports Postgres, MySQL, and SQLite. No DSL, no ORM dependency.',
+    name:        'Family Recipe Box',
+    slug:        'recipebox',
+    tagline:     'Sharing the source code that enriches life.',
+    description: 'People eat to live.  Italians live to eat.  This site will serve as a WAN recipe box for family and accessing while traveling.  This will be the foundation for future app development.',
     status:      'maintained',
-    category:    'cli',
-    lang:        'Go',
-    stars:       156,
-    repo:        'https://github.com/yourusername/sqlmig',
+    category:    'GitHub',
+    lang:        'Astro',
+  //  stars:       156,
+    repo:        'https://github.com/davidtseenmn/steenrecipebox.github.io',
     tags:        ['go', 'sql', 'migrations', 'database'],
     featured:    false,
-    year:        2023,
+    year:        2004,
   },
+  /*,
   {
     name:        'env-schema',
     slug:        'env-schema',
@@ -99,11 +100,11 @@ export const projects: Project[] = [
     status:      'maintained',
     category:    'library',
     lang:        'TypeScript',
-    stars:       203,
+  //  stars:       203,
     repo:        'https://github.com/yourusername/env-schema',
     tags:        ['typescript', 'config', 'validation', 'library'],
     featured:    true,
-    year:        2023,
+    year:        2026,
   },
   {
     name:        'cadence',
@@ -113,11 +114,11 @@ export const projects: Project[] = [
     status:      'active',
     category:    'library',
     lang:        'Go',
-    stars:       78,
+  //  stars:       78,
     repo:        'https://github.com/yourusername/cadence',
     tags:        ['go', 'scheduler', 'cron', 'sqlite'],
     featured:    false,
-    year:        2025,
+    year:        2026,
   },
   {
     name:        'httpsnoop',
@@ -127,7 +128,7 @@ export const projects: Project[] = [
     status:      'wip',
     category:    'tool',
     lang:        'Rust',
-    stars:       41,
+  //  stars:       41,
     repo:        'https://github.com/yourusername/httpsnoop',
     tags:        ['rust', 'http', 'proxy', 'debugging'],
     featured:    false,
@@ -141,17 +142,18 @@ export const projects: Project[] = [
     status:      'archived',
     category:    'cli',
     lang:        'Shell',
-    stars:       29,
+  //  stars:       29,
     repo:        'https://github.com/yourusername/dotkeeper',
     tags:        ['shell', 'dotfiles', 'devtools'],
     featured:    false,
     year:        2022,
   },
+  */
 ];
 
 export const skills = [
-  { group: 'languages',      items: ['Go', 'Rust', 'TypeScript', 'Python', 'SQL', 'Shell'] },
-  { group: 'infrastructure', items: ['Kubernetes', 'Terraform', 'PostgreSQL', 'SQLite', 'Redis', 'Caddy'] },
-  { group: 'observability',  items: ['OpenTelemetry', 'Prometheus', 'Grafana', 'Jaeger'] },
-  { group: 'workflow',       items: ['Git', 'GitHub Actions', 'Docker', 'Nix', 'Tailscale'] },
+  { group: 'languages',      items: ['Shell', 'HTML', 'TypeScript', 'C', 'C++', 'Go', 'SQL', 'Python'] },
+//  { group: 'infrastructure', items: ['Kubernetes', 'Terraform', 'PostgreSQL', 'SQLite', 'Redis', 'Caddy'] },
+//  { group: 'observability',  items: ['OpenTelemetry', 'Prometheus', 'Grafana', 'Jaeger'] },
+  { group: 'workflow',       items: ['Git', 'GitHub Actions', 'Docker', 'SSH', 'Tailscale'] },
 ];
