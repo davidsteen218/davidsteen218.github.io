@@ -72,7 +72,7 @@ export const projects: Project[] = [
     category:    'html',
     lang:        'html',
   //  stars:       94,
-    repo:        'https://github.com/davidsteen218/contactinfo',
+    repo:        'https://davidsteen218.github.io/contactinfo/',
     tags:        ['active', 'html', 'GitHub'],
     featured:    true,
     year:        2026,
