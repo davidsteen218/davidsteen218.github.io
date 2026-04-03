@@ -86,7 +86,7 @@ export const projects: Project[] = [
     category:    'GitHub',
     lang:        'Astro',
   //  stars:       156,
-    repo:        'https://github.com/davidtseenmn/steenrecipebox.github.io',
+    repo:        'https://steenrecipebox.github.io',
     tags:        ['go', 'sql', 'migrations', 'database'],
     featured:    false,
     year:        2004,
