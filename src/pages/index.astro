@@ -24,14 +24,14 @@ const statuses = [...new Set(projects.map(p => p.status))];
         <span class="stat-num">{total}</span>
         <span class="stat-lbl">repositories</span>
       </div>
-//      <div class="stat">
-//        <span class="stat-num">{stars.toLocaleString()}</span>
-//        <span class="stat-lbl">total stars</span>
-//      </div>
       <div class="stat">
-        <span class="stat-num">{active}</span>
-        <span class="stat-lbl">active</span>
-      </div>
+        <span class="stat-num">{stars.toLocaleString()}</span>
+        <span class="stat-lbl">total stars</span>
+//      </div>
+//      <div class="stat">
+//        <span class="stat-num">{active}</span>
+//        <span class="stat-lbl">active</span>
+//      </div>
       <div class="stat">
         <span class="stat-num">{langs.length}</span>
         <span class="stat-lbl">languages</span>
